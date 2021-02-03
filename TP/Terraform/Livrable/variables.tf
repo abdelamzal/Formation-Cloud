@@ -6,7 +6,7 @@
 
 variable "ressource_group_name" {
   type    = string
-  default = "rg5sig5"
+  default = "FycCloudSec"
   description = "Name of resource group"
 }
 

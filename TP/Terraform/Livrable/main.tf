@@ -13,22 +13,6 @@ resource "azurerm_resource_group" "rg" {
   name     = var.ressource_group_name
   location = var.ressource_group_location
 }
-/*Storage account*/
-resource "azurerm_storage_account" "sg" {
-  name                     = var.storage_account_name
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-/*Storage container*/
-resource "azurerm_storage_container" "sgcontainer" {
-  name                  = var.storage_container_name
-  storage_account_name  = azurerm_storage_account.sg.name
-  container_access_type = "private"
-}
-
-
 
 /***************************************
 *
@@ -65,6 +49,68 @@ resource "azurerm_mysql_database" "mysqldb" {
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
 }
+
+/*************************************
+*
+*   Services
+*
+**************************************/
+
+/*Azure Trafic Manager*/
+
+/* API */
+resource "azurerm_app_service" "webapp" {
+  name                = var.app_service_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
+  https_only          = var.https_only
+  site_config {
+    always_on   = var.always_on
+    ftps_state  = var.ftps_state
+    java_version           = "1.8"
+    java_container         = "tomcat"
+    java_container_version = "9.0"
+  }
+}
+
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                 = var.plan_name
+  resource_group_name = azurerm_resource_group.rg.name
+  location             = azurerm_resource_group.rg.location
+  kind                 = var.kind
+  # Reserved must be set to true for Linux App Service Plans
+  reserved = true
+
+  sku {
+    tier     = var.sku_tier
+    size     = var.sku_size
+    capacity = var.sku_capacity
+  }
+}
+
+/*************************************
+*
+*   HD Insight
+*
+**************************************/
+
+/*Storage account
+resource "azurerm_storage_account" "sg" {
+  name                     = var.storage_account_name
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+*/
+/*Storage container
+resource "azurerm_storage_container" "sgcontainer" {
+  name                  = var.storage_container_name
+  storage_account_name  = azurerm_storage_account.sg.name
+  container_access_type = "private"
+}
+*/
 /*HD Insight Analyse BDD
 resource "azurerm_hdinsight_hbase_cluster" "hbasecluster" {
   name                = var.hdinsight_hbase_cluster_name
@@ -111,42 +157,3 @@ resource "azurerm_hdinsight_hbase_cluster" "hbasecluster" {
   }
 }
 */
-
-/*************************************
-*
-*   Services
-*
-**************************************/
-
-/*Azure Trafic Manager*/
-
-/* API */
-resource "azurerm_app_service" "webapp" {
-  name                = var.app_service_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
-  https_only          = var.https_only
-  site_config {
-    always_on   = var.always_on
-    ftps_state  = var.ftps_state
-    java_version           = "1.8"
-    java_container         = "tomcat"
-    java_container_version = "9.0"
-  }
-}
-
-resource "azurerm_app_service_plan" "app_service_plan" {
-  name                 = var.plan_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location             = azurerm_resource_group.rg.location
-  kind                 = var.kind
-  # Reserved must be set to true for Linux App Service Plans
-  reserved = true
-
-  sku {
-    tier     = var.sku_tier
-    size     = var.sku_size
-    capacity = var.sku_capacity
-  }
-}
