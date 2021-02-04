@@ -53,3 +53,11 @@ Lien Terraform :
 - Téléchargement 
 
     https://www.terraform.io/downloads.html
+
+
+Azure CLI :
+
+- Téléchargement 
+
+    https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli-windows?tabs=azure-cli
+    

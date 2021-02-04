@@ -47,12 +47,12 @@ variable "storage_container_name_file" {
 
 variable "server_mysql_name" {
   type    = string
-  default = "servermysqlg5"
+  default = "servermysqlFyc"
   description = "Name of server MySql"
 }
 variable "mysql_db_name" {
   type    = string
-  default = "dbg5"
+  default = "dbFyc"
   description = "Name of Data Base"
 }
 
