@@ -29,6 +29,10 @@ Lien LAB :
 
     https://github.com/MicrosoftLearning/AZ-900T0x-MicrosoftAzureFundamentals
 
+- L'accès au lab du cours
+
+    https://github.com/abdelamzal/Formation-Cloud
+
 
 Lien PORTAL :
 
@@ -42,3 +46,10 @@ Lien Terraform :
 
     https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
 
+- Installation 
+
+    https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/azure-get-started
+
+- Téléchargement 
+
+    https://www.terraform.io/downloads.html
